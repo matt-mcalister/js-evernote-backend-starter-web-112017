@@ -1,0 +1,33 @@
+#side-bar {
+  width: 33%;
+  border: solid;
+  border-width: 1%;
+  border-color: blue;
+  float: left;
+  display: inline;
+}
+
+#current-note {
+  width: 66%;
+  border: solid;
+  border-width: 1%;
+  border-color: red;
+  float: right;
+  display: inline;
+}
+
+#main-content {
+  width: 100%;
+  border: solid;
+  border-width: 3px;
+  border-color: black;
+  display: flex;
+}
+
+.note-summary {
+  width: 100%;
+  border: solid;
+  border-width: 1%;
+  border-color: green;
+  float: left;
+}
