@@ -16,10 +16,10 @@ const Note = (() => {
       noteWrapper.className = 'note-summary';
 
       let noteTitle = document.createElement('h3')
-      noteTitle.innerHTML = this.title;
+      noteTitle.innerHTML = this.title.slice(0, 40);
 
       let noteBody = document.createElement('p')
-      noteBody.innerHTML = `${this.body.slice(0, 25)} <br>`
+      noteBody.innerHTML = `${this.body.slice(0, 100)} <br>`
 
       sideBar.prepend(noteWrapper)
       noteWrapper.append(noteTitle)
@@ -35,7 +35,7 @@ const Note = (() => {
 
       let editNote = document.createElement('button')
       editNote.className = 'tool-button'
-      editNote.innerText = 'edit'
+      editNote.innerText = 'Edit'
       editNote.value = this.id
 
 
@@ -44,7 +44,7 @@ const Note = (() => {
 
       let deleteNote = document.createElement('button')
       deleteNote.className = 'tool-button'
-      deleteNote.innerText = 'X'
+      deleteNote.innerText = 'Delete'
       deleteNote.value = this.id
 
       deleteNote.addEventListener('click', this.delete.bind(this))
