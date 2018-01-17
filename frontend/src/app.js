@@ -4,6 +4,7 @@ class App {
     this.newNote = document.querySelector('#new-note');
     this.mainContent = document.querySelector('.content')
     this.toolbar = document.querySelector('.toolbar')
+    store.app = this
     this.fetchFromBackEnd()
   }
 
@@ -14,7 +15,6 @@ class App {
       // render sidebar notes
       for (const note of notes) {
         let newNote = new Note({title: note.title, body: note.body, id: note.id});
-        store.notes[newNote.id] = newNote;
         newNote.createSidebarDiv()
       }
 
@@ -44,7 +44,7 @@ class App {
     this.createNewNoteForm();
     mainContent.append(this.noteForm);
 
-    noteForm.addEventListener('submit', this.handleNewNoteSubmission)
+    this.noteForm.addEventListener('submit', this.handleNewNoteSubmission)
   }
 
   createNewNoteForm(){
@@ -84,6 +84,49 @@ class App {
       .then(json => {
         const note = new Note(json)
         note.createSidebarDiv();
+        note.showFullNote();
+      })
+  }
+
+  createUpdateNoteForm(note){
+    this.noteForm = document.createElement('form')
+    this.noteForm.id = 'note-form'
+
+    this.noteTitle = document.createElement('input')
+    this.noteTitle.type = 'text'
+    this.noteTitle.value = note.title
+
+    this.noteBody = document.createElement('textarea')
+    this.noteBody.value = note.body
+
+    let submit = document.createElement('input')
+    submit.type = 'submit'
+    submit.value = 'Update Note'
+
+    this.noteForm.append(this.noteTitle)
+    this.noteForm.append(this.noteBody)
+    this.noteForm.append(submit)
+    this.mainContent.append(this.noteForm)
+  }
+
+  handleUpdateNoteSubmission(event) {
+    event.preventDefault()
+
+    fetch(`http://localhost:3000/api/v1/notes/${this.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        title: store.app.noteTitle.value,
+        body: store.app.noteBody.value
+      })
+    }).then(response => response.json())
+      .then(json => {
+        const note = new Note(json)
+        store.notes[note.id] = note
+        note.editSidebarDiv();
         note.showFullNote();
       })
   }
