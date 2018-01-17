@@ -28,9 +28,9 @@ class App {
 
   handleShowFullNote(event){
     if (event.target.nodeName === "P" || event.target.nodeName === "H3") {
-      store.notes[event.target.parentElement.id].showFullNote();
+      this.createUpdateNoteForm(store.notes[event.target.parentElement.id]);
     } else {
-      store.notes[event.target.id].showFullNote();
+      this.createUpdateNoteForm(store.notes[event.target.id]);
     }
   }
 
@@ -42,9 +42,9 @@ class App {
 
     // create form element
     this.createNewNoteForm();
-    mainContent.append(this.noteForm);
+    this.mainContent.append(this.noteForm);
 
-    this.noteForm.addEventListener('submit', this.handleNewNoteSubmission)
+    this.noteForm.addEventListener('submit', this.handleNewNoteSubmission.bind(this))
   }
 
   createNewNoteForm(){
@@ -57,14 +57,15 @@ class App {
 
     this.noteBody = document.createElement('textarea')
     this.noteBody.placeholder = 'Description'
+    // this.noteBody.rows = 50;
 
     let submit = document.createElement('input')
     submit.type = 'submit'
     submit.value = 'Create Note'
 
-    noteForm.append(this.noteTitle)
-    noteForm.append(this.noteBody)
-    noteForm.append(submit)
+    this.noteForm.append(this.noteTitle)
+    this.noteForm.append(this.noteBody)
+    this.noteForm.append(submit)
   }
 
   handleNewNoteSubmission(event) {
@@ -84,29 +85,36 @@ class App {
       .then(json => {
         const note = new Note(json)
         note.createSidebarDiv();
-        note.showFullNote();
+        store.app.createUpdateNoteForm(note);
       })
   }
 
   createUpdateNoteForm(note){
+    store.app.mainContent.innerHTML = '';
+    store.app.toolbar.innerHTML = ''
     this.noteForm = document.createElement('form')
     this.noteForm.id = 'note-form'
 
     this.noteTitle = document.createElement('input')
     this.noteTitle.type = 'text'
     this.noteTitle.value = note.title
+    this.noteTitle.classname = 'note-title'
 
     this.noteBody = document.createElement('textarea')
     this.noteBody.value = note.body
+    // this.noteBody.rows = ;
 
     let submit = document.createElement('input')
     submit.type = 'submit'
-    submit.value = 'Update Note'
+    submit.value = 'Save Changes'
 
     this.noteForm.append(this.noteTitle)
     this.noteForm.append(this.noteBody)
     this.noteForm.append(submit)
     this.mainContent.append(this.noteForm)
+    note.createButtons();
+
+    this.noteForm.addEventListener('submit', this.handleUpdateNoteSubmission.bind(note))
   }
 
   handleUpdateNoteSubmission(event) {
@@ -127,7 +135,7 @@ class App {
         const note = new Note(json)
         store.notes[note.id] = note
         note.editSidebarDiv();
-        note.showFullNote();
+        store.app.createUpdateNoteForm(note);
       })
   }
 

@@ -24,12 +24,12 @@ class Note {
     }
 
     createButtons(){
-      let editNote = document.createElement('button')
-      editNote.className = 'tool-button'
-      editNote.innerText = 'Edit'
-      editNote.value = this.id
-
-      editNote.addEventListener('click', this.edit.bind(this))
+      // let editNote = document.createElement('button')
+      // editNote.className = 'tool-button'
+      // editNote.innerText = 'Edit'
+      // editNote.value = this.id
+      //
+      // editNote.addEventListener('click', this.edit.bind(this))
 
       let deleteNote = document.createElement('button')
       deleteNote.className = 'tool-button'
@@ -38,7 +38,7 @@ class Note {
 
       deleteNote.addEventListener('click', this.delete.bind(this))
 
-      store.app.toolbar.append(editNote)
+      // store.app.toolbar.append(editNote)
       store.app.toolbar.append(deleteNote)
     }
 
@@ -47,6 +47,8 @@ class Note {
       store.app.toolbar.innerHTML = ''
 
       this.createButtons();
+      store.app.mainContent.innerHTML = '';
+      store.app.toolbar.innerHTML = ''
 
       let noteTitle = document.createElement('h1')
       noteTitle.innerHTML = this.title;

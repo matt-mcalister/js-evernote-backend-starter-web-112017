@@ -24,7 +24,7 @@ body {
   height:100%;
   width: 9%;
   padding-top: 10px;
-  padding-left: 6px;
+  padding-left: 4px;
   text-align: center;
   float: left;
 }
@@ -51,6 +51,7 @@ body {
   padding: 10px;
   border: 1px solid black;
   border-top: 0px;
+  border-left: 0px;
   float: left;
 }
 .note-summary:hover {
@@ -96,4 +97,33 @@ body {
   font-size: 25px;
   background-color: white;
   border: 0;
+}
+
+input[type=text] {
+  width: 99%;
+  height: 50px;
+  font-size: 40px;
+  font-weight: bold;
+  border: 0px;
+  border-bottom: 1px solid black;
+  color: black;
+}
+
+
+input[type=submit] {
+  width: 20%;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  border: 0px;
+  background-color: lightblue;
+  color: black;
+}
+
+textarea {
+  width: 99%;
+  height: 700px;
+  font-size: 20px;
+  border: 0px;
+  color: black;
 }
