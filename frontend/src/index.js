@@ -1,7 +1,11 @@
 const store = {notes: {}}
 
 document.addEventListener('DOMContentLoaded', () => {
-  const sideBar = document.querySelector('#side-bar')
+  const sideBar = document.querySelector('.notes-preview')
+  const newNote = document.querySelector('#new-note');
+  const mainContent = document.querySelector('.content')
+  const toolbar = document.querySelector('.toolbar')
+
 
   fetch("http://localhost:3000/api/v1/notes")
   .then(response => response.json())
@@ -17,8 +21,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     for (const note of notes) {
-      new Note(note.title, note.body, note.id).createSidebarDiv()
+      new Note({title: note.title, body: note.body, id: note.id}).createSidebarDiv()
     }
+
+    newNote.addEventListener('click', handleNewNote)
+    function handleNewNote() {
+      mainContent.innerHTML = '';
+      let noteForm = document.createElement('form')
+      noteForm.id = 'note-form'
+
+      const toolbar = document.querySelector('.toolbar')
+      toolbar.innerHTML = ''
+
+      let noteTitle = document.createElement('input')
+      noteTitle.type = 'text'
+      noteTitle.placeholder = 'Title'
+
+      let noteBody = document.createElement('textarea')
+      noteBody.placeholder = 'Description'
+
+      let submit = document.createElement('input')
+      submit.type = 'submit'
+      submit.value = 'Create Note'
+
+      noteForm.append(noteTitle)
+      noteForm.append(noteBody)
+      noteForm.append(submit)
+      mainContent.append(noteForm)
+
+      noteForm.addEventListener('submit', handleFormSubmission)
+      function handleFormSubmission(event) {
+        event.preventDefault()
+
+        fetch('http://localhost:3000/api/v1/notes', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            title: noteTitle.value,
+            body: noteBody.value
+          })
+        }).then(response => response.json())
+          .then(json => {
+            const note = new Note(json)
+            note.createSidebarDiv();
+            note.showFullNote();
+          })
+      } // handle submit
+    }// handle new note
 
 
 

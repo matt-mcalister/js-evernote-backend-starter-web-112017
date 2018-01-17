@@ -1,33 +1,91 @@
-#side-bar {
-  width: 33%;
+body {
+  margin: 2;
+  background-color: lightgrey;
+}
+
+.wrapper {
+  height:100vh;
+}
+
+
+.side {
+  width: 25%;
+  height:100%;
   border: solid;
-  border-width: 1%;
   border-color: blue;
   float: left;
   display: inline;
+  position: fixed;
 }
 
-#current-note {
+
+.controller {
+  height:100vh;
+  width: 33%;
+  border: 1px solid yellow;
+  float: left;
+}
+
+
+.user-info {
   width: 66%;
+  height: 10vh;
+  border: 1px solid purple;
+  float: right;
+}
+
+.notes-preview {
+  width: 66%;
+  height: 90vh;
+  border: 1px solid red;
+  float: right;
+  overflow: scroll;
+}
+
+
+
+
+
+.main {
+  width: 70%;
+  height: 100%;
   border: solid;
-  border-width: 1%;
-  border-color: red;
+  border-color: green;
   float: right;
   display: inline;
+  padding: 2%;
+  /* position: fixed; */
 }
 
-#main-content {
+.toolbar {
   width: 100%;
+  height: 8%;
+  border: 1px solid orange;
+  margin-bottom: 2%
+}
+
+
+
+.content {
+  width: 100%;
+  height: 90%;
   border: solid;
-  border-width: 3px;
-  border-color: black;
-  display: flex;
+  border-width: 2px;
+  border-color: teal;
+  /* display: flex; */
 }
 
 .note-summary {
-  width: 100%;
+  width: 100vh;
   border: solid;
   border-width: 1%;
   border-color: green;
   float: left;
+}
+.note-summary:hover {
+    border-color: lightgreen;
+}
+
+#new-note {
+  font-size: 20px;
 }
