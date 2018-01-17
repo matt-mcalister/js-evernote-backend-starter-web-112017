@@ -1,5 +1,4 @@
-const Note = (() => {
-  return class Note {
+class Note {
     constructor({title, body, id}){
       this.id = id;
       this.title = title;
@@ -153,5 +152,4 @@ const Note = (() => {
     }
 
 
-  }
-})()
+}
